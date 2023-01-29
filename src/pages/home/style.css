@@ -1,0 +1,55 @@
+.pselect {
+    position: relative;
+    height: 100%;
+    width: 100%;
+    display: flex;
+}
+
+.pselect-logo {
+    margin: 0;
+    position: absolute;
+    top: 5%;
+    left: 5%;
+    transform: translate(-50%, -50%);
+}
+
+.pselect-profiles {
+    margin: 0;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 10%;
+}
+
+.pselect-profile-button {
+    text-transform: none;
+    transform: translate(-20%, -50%);
+
+    background-color: #605972;
+    font-size: 15px;
+
+    border: 1px solid #605972;
+    filter: drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25));
+    border-radius: 30px;
+}
+
+.pselect-copyright {
+    color: #bcbcbc;
+    margin: 0;
+    position: absolute;
+    top: 95%;
+    left: 50%;
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+}
+
+.pselect-ps {
+    color: #ffffff;
+    margin: 0;
+    position: absolute;
+    font-size: 35px;
+    top: 15%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
