@@ -16,7 +16,7 @@ Return must have fields:
 
 ## Trigger AI tags
 
-Url: Post api/v0/lenstags/trigger
+Url: Post api/v0/lenstag/trigger
 
 Request:
 ```json
@@ -42,7 +42,7 @@ or
 
 ## Get AI tags
 
-Url: Get api/v0/lenstags/tags
+Url: Get api/v0/lenstag/tags
 
 Request:
 - handle : Profile handle
