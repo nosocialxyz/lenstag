@@ -57,7 +57,7 @@ Return:
     "picture": "",
     "unprocessed": 20, 
     "tags": [], 
-    "aipicture": "" 
+    "aiPicture": "" 
 }
 ```
 or
@@ -69,8 +69,8 @@ or
     "handle": "",
     "picture": "",
     "unprocessed": 20, 
-    "tags": ["BTC", "price", "xxx"], // 3 tags
-    "aipicture": "https://xxx" 
+    "tags": ["BTC", "price", "xxx"],
+    "aiPicture": "https://xxx" 
 }
 ```
 or
@@ -83,7 +83,7 @@ or
     "picture": "",
     "unprocessed": 0, 
     "tags": ["BTC", "price"],
-    "aipicture": "https://xxx" 
+    "aiPicture": "https://xxx" 
 }
 ```
 
@@ -97,7 +97,7 @@ or
     "picture": "",
     "unprocessed": 0, 
     "tags": [],
-    "aipicture": "" 
+    "aiPicture": "" 
 }
 ```
 
