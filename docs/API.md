@@ -53,9 +53,11 @@ Return:
 
 ```json
 {
+    "handle": "",
+    "picture": "",
     "unprocessed": 20, 
     "tags": [], 
-    "picture": "" 
+    "aipicture": "" 
 }
 ```
 or
@@ -64,9 +66,11 @@ or
 
 ```json
 {
+    "handle": "",
+    "picture": "",
     "unprocessed": 20, 
     "tags": ["BTC", "price", "xxx"], // 3 tags
-    "picture": "https://xxx" 
+    "aipicture": "https://xxx" 
 }
 ```
 or
@@ -75,9 +79,11 @@ or
 
 ```json
 {
+    "handle": "",
+    "picture": "",
     "unprocessed": 0, 
     "tags": ["BTC", "price"],
-    "picture": "https://xxx" 
+    "aipicture": "https://xxx" 
 }
 ```
 
@@ -87,9 +93,11 @@ or
 
 ```json
 {
+    "handle": "",
+    "picture": "",
     "unprocessed": 0, 
     "tags": [],
-    "picture": "" 
+    "aipicture": "" 
 }
 ```
 
