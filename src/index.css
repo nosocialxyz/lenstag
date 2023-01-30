@@ -22,3 +22,17 @@ code {
 .disable {
   filter: brightness(50%);
 }
+
+.MuiOutlinedInput-notchedOutline {
+  border-color: rgb(191, 191, 191)!important;
+}
+
+.MuiInputLabel-outlined {
+  color: rgb(191, 191, 191)!important;
+}
+
+.MuiButton-root	 {
+  /* border: none !important; */
+  border-color: rgb(191, 191, 191)!important;
+  color: rgb(191, 191, 191)!important;
+}
