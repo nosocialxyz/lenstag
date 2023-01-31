@@ -14,6 +14,7 @@ import styled from '@emotion/styled';
 import { SearchResult, TriggerResult } from 'src/lib/types';
 import result from 'src/_mock/search_result';
 import { tags, trigger } from 'src/api';
+import Loading from 'src/components/loading';
 
 interface AutoDivPros {
   width?: string;
@@ -59,7 +60,7 @@ function Home() {
   const [handle, setHandle] = useState<string>('');
   const [triggerResult, setTriggerResult] = useState<TriggerResult | null>(null);
 
-  const search = () => {
+  const search = async () => {
     console.log('handle:::', handle)
     setSearchResult(null)
     complete[0].classList.remove('block')
@@ -69,40 +70,31 @@ function Home() {
     loading[0].classList.add('block')
     tip[0].classList.add('block')
     processing[0].classList.add('block');
-    trigger(handle).then(res => {
-      console.log('trigger res:::', res)
-    })
+    const triggerRes = await trigger(handle)
+    if (triggerRes && triggerRes.statusCode == 200) {
+      processing[0].classList.add('flashing')
 
-    processing[0].classList.add('flashing')
-
-    const timer = setInterval(() => {
-      tags(handle).then(res => {
-        console.log('tags res:::', res)
-        setSearchResult(res)
-        if (res && res.unprocessed === 0) {
-          processing[0].classList.remove('block')
-          complete[0].classList.add('block')
-          setTimeout(() => {
-            clearInterval(timer)
-            // setSearchResult(result)
-          }, 6000);
-        }
-      })
-    }, 5000);
+      const timer = setInterval(() => {
+        tags(handle).then(res => {
+          loading[0].classList.remove('block');
+          mission[0].classList.remove('rowup');
+          console.log('tags res:::', res)
+          setSearchResult(res)
+          if (res && res.unprocessed === 0) {
+            processing[0].classList.remove('block')
+            complete[0].classList.add('block')
+            setTimeout(() => {
+              clearInterval(timer)
+              // setSearchResult(result)
+            }, 6000);
+          }
+        })
+      }, 5000);
+    }
 
     setTimeout(() => {
       mission[0].classList.add('rowup');
     }, 3000);
-    
-    setTimeout(() => {
-      loading[0].classList.remove('block')
-      mission[0].classList.remove('rowup');
-    }, 5000);
-
-    setTimeout(() => {
-      
-      // setSearchResult(result)
-    }, 10000);
   }
 
   return (
@@ -139,7 +131,7 @@ function Home() {
         <div className='search_result'>
           <div className='result_mission'>
             <div className='mission_loading'>Explore the user's social network on lens...</div>
-            <div className='mission_processing'>Use AI to analyze user's publications, {searchResult?.unprocessed ? searchResult?.unprocessed : '99+'} left ...</div>
+            <div className='mission_processing'>Use AI to analyze user's publications, {searchResult?.unprocessed ? searchResult?.unprocessed : '-'} left ...</div>
             <div className='mission_complete'>Mission completed</div>
           </div>
           <div className='tool_tip'>
@@ -149,18 +141,20 @@ function Home() {
         <div className='result_container'>
           {isInSearching && <div className='result_card'>
             <div className='result_tags'>
-              { searchResult?.picture && <div className='avatar'><img src={searchResult?.picture} /></div>}
-              { searchResult?.handle && <div className='profile'>{searchResult?.handle}</div>}
-              <div className='tags'>
+              { searchResult?.picture ? <div className='avatar'><img src={searchResult?.picture} /></div> : <Loading width='52px' height='52px' /> }
+              { searchResult?.handle ? <div className='profile'>{searchResult?.handle}</div> : <Loading width='160px' height='52px' />}
+              { searchResult?.tags?.length ? <div className='tags'>
                 {
                   searchResult?.tags?.length && searchResult?.tags?.slice(0, 4).map((e, index) => {
                     return <AutoDiv key={index} width={calWidth(e) + 'px'} fontSize={calFontSize(e, calWidth(e)) + 'px'}>{e}</AutoDiv>
                   })
                 }
-              </div>
-              {searchResult && <div className='follow'><AddIcon /> FOLLOW</div>}
+              </div> : <Loading width='420px' height='52px' />}
+              {searchResult ? <div className='follow'><AddIcon /> FOLLOW</div> : <Loading width='160px' height='52px' />}
             </div>
-            { searchResult?.aiPicture && <img className='result_pic' src={searchResult?.aiPicture} />}
+            { searchResult?.aiPicture ? <img className='result_pic' src={searchResult?.aiPicture} /> : <div className='result_pic'>
+              <Loading width='800px' height='360px' />
+            </div>}
           </div>}
         </div>
       </div>

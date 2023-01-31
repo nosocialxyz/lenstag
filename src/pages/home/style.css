@@ -328,6 +328,28 @@
 
 
 .result_pic {
+    display: flex;
     width: 1200px;
     margin-top: 32px;
+    align-items: center;
+    justify-content: center;
+}
+
+.border {
+    /* background: linear-gradient(90deg, #333 50%, transparent 0) repeat-x; */
+    border: 1px dashed;
+    animation: linearGradientMove .3s infinite linear;
+    background:
+        linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+        linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
+        linear-gradient(0deg, #333 50%, transparent 0) repeat-y,
+        linear-gradient(0deg, #333 50%, transparent 0) repeat-y;
+    background-size: 4px 1px, 4px 1px, 1px 4px, 1px 4px;
+    background-position: 0 0, 0 100%, 0 0, 100% 0;
+}
+
+@keyframes linearGradientMove {
+    100% {
+        background-position: 4px 0, -4px 100%, 0 -4px, 100% 4px;
+    }
 }
