@@ -60,7 +60,7 @@ export default function AccountPopover() {
           }),
         }}
       >
-        <Avatar src={user.basicInfo?.info?.picture} alt="photoURL" />
+        <Avatar src={'/assets/images/avatar.png'} alt="photoURL" />
       </IconButton>
 
       <Popover
