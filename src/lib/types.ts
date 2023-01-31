@@ -143,3 +143,15 @@ export interface ProfileBaseBenefit {
     url: string;
     status: string;
 }
+
+export interface SearchResult {
+    handle: string;
+    picture: string;
+    unprocessed: number;
+    tags: string[];
+    aiPicture: string;
+}
+
+export interface TriggerResult {
+    status: string;
+}

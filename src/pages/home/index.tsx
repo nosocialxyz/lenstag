@@ -11,6 +11,9 @@ import { Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import AddIcon from '@mui/icons-material/Add';
 import styled from '@emotion/styled';
+import { SearchResult, TriggerResult } from 'src/lib/types';
+import result from 'src/_mock/search_result';
+import { tags, trigger } from 'src/api';
 
 interface AutoDivPros {
   width?: string;
@@ -52,16 +55,40 @@ function Home() {
   const complete = document.getElementsByClassName('mission_complete');
   const location = useLocation();
   const user = useContextLoginUser();
+  const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
+  const [handle, setHandle] = useState<string>('');
+  const [triggerResult, setTriggerResult] = useState<TriggerResult | null>(null);
 
   const search = () => {
+    console.log('handle:::', handle)
+    setSearchResult(null)
     complete[0].classList.remove('block')
     setIsInSearching(true);
-    const homeContainer = document.getElementsByClassName('home-container');
     describe[0].classList.add('none');
     homeContainer[0].classList.add('home-container-search');
     loading[0].classList.add('block')
     tip[0].classList.add('block')
-    processing[0].classList.add('block')
+    processing[0].classList.add('block');
+    trigger(handle).then(res => {
+      console.log('trigger res:::', res)
+    })
+
+    processing[0].classList.add('flashing')
+
+    const timer = setInterval(() => {
+      tags(handle).then(res => {
+        console.log('tags res:::', res)
+        setSearchResult(res)
+        if (res && res.unprocessed === 0) {
+          processing[0].classList.remove('block')
+          complete[0].classList.add('block')
+          setTimeout(() => {
+            clearInterval(timer)
+            // setSearchResult(result)
+          }, 6000);
+        }
+      })
+    }, 5000);
 
     setTimeout(() => {
       mission[0].classList.add('rowup');
@@ -69,12 +96,12 @@ function Home() {
     
     setTimeout(() => {
       loading[0].classList.remove('block')
+      mission[0].classList.remove('rowup');
     }, 5000);
 
     setTimeout(() => {
-      mission[0].classList.remove('rowup');
-      processing[0].classList.remove('block')
-      complete[0].classList.add('block')
+      
+      // setSearchResult(result)
     }, 10000);
   }
 
@@ -91,10 +118,14 @@ function Home() {
         <div className='search'>
           <div className='search_container' >
             <FormControl className='search_input'>
-              <InputLabel htmlFor="outlined-adornment-amount">Handle</InputLabel>
+              <InputLabel htmlFor="outlined-adornment-handle">Handle</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-amount"
-                label="Amount"
+                id="outlined-adornment-handle"
+                label="Handle"
+                value={handle}
+                onChange={(event) => {
+                  setHandle(event.target.value)
+                }}
               />
             </FormControl>
             <SearchIcon className='search_button' sx={{
@@ -108,33 +139,31 @@ function Home() {
         <div className='search_result'>
           <div className='result_mission'>
             <div className='mission_loading'>Explore the user's social network on lens...</div>
-            <div className='mission_processing'>Use AI to analyze user's publications, 50 left ...</div>
+            <div className='mission_processing'>Use AI to analyze user's publications, {searchResult?.unprocessed ? searchResult?.unprocessed : '99+'} left ...</div>
             <div className='mission_complete'>Mission completed</div>
           </div>
           <div className='tool_tip'>
-            <Tooltip className='tip' title="1111111111111"><HelpOutlineIcon /></Tooltip>
+            <Tooltip className='tip' title="Lenstag is an internal version currently. In public version, the speed of AI analysis will be greatly accelerated"><HelpOutlineIcon /></Tooltip>
           </div>
         </div>
         <div className='result_container'>
           {isInSearching && <div className='result_card'>
             <div className='result_tags'>
-              <div className='avatar'><img src='https://data.nosocial.xyz/ai-tags/0x0e7b-0xffffffff-1675064761.png' /></div>
-              <div className='profile'>abcbby.len</div>
+              { searchResult?.picture && <div className='avatar'><img src={searchResult?.picture} /></div>}
+              { searchResult?.handle && <div className='profile'>{searchResult?.handle}</div>}
               <div className='tags'>
-                <AutoDiv width={calWidth('BTC') + 'px'} fontSize={calFontSize('BTC', calWidth('BTC')) + 'px'}>BTC</AutoDiv>
-                <AutoDiv width={calWidth('Price') + 'px'} fontSize={calFontSize('Price', calWidth('Price')) + 'px'}>Price</AutoDiv>
-                <AutoDiv width={calWidth('Community') + 'px'} fontSize={calFontSize('Community', calWidth('Community')) + 'px'}>Community</AutoDiv>
-                <AutoDiv width={calWidth('Arteriosclerosis ') + 'px'} fontSize={calFontSize('Arteriosclerosis ', calWidth('Arteriosclerosis ')) + 'px'} >Arteriosclerosis </AutoDiv>
+                {
+                  searchResult?.tags?.length && searchResult?.tags?.slice(0, 4).map((e, index) => {
+                    return <AutoDiv key={index} width={calWidth(e) + 'px'} fontSize={calFontSize(e, calWidth(e)) + 'px'}>{e}</AutoDiv>
+                  })
+                }
               </div>
-              <div className='follow'><AddIcon /> FOLLOW</div>
+              {searchResult && <div className='follow'><AddIcon /> FOLLOW</div>}
             </div>
-            <img className='result_pic' src='https://data.nosocial.xyz/ai-tags/0x0e7b-0xffffffff-1675064761.png' />
+            { searchResult?.aiPicture && <img className='result_pic' src={searchResult?.aiPicture} />}
           </div>}
         </div>
       </div>
-      {/* <Grid container justifyContent="center">
-      </Grid> */}
-
       <div className="home-copyright">© 2023 Build with 💛 by NoSocial Labs</div>
     </div>
   );

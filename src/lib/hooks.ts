@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useContext } from "react";
-import { appsBase, benefitsBase, profileInfo } from "src/api";
 import store from 'store';
 import { ProfileInfo } from "./types";
 
