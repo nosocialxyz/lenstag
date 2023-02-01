@@ -54,7 +54,6 @@ const Logo = ({ disabledLink = false, sx, ...other }: Props) => {
         <span id='c'>T</span>
         <span id='i'>a</span>
         <span id='a'>g</span>
-        <span id='l'>s</span>
       </p>
     </div>
   );
