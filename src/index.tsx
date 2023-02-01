@@ -18,7 +18,7 @@ root.render(
   <HelmetProvider>
     <BrowserRouter>
       <React.StrictMode>
-        <Web3ReactProvider getLibrary={(provider, connector) => { new Web3(provider) }}>
+        <Web3ReactProvider getLibrary={(provider) => { new Web3(provider) }}>
           <MetaMaskProvider>
             <App />
           </MetaMaskProvider>

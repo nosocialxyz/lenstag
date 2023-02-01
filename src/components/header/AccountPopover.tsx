@@ -20,7 +20,7 @@ const MENU_OPTIONS = [
 // ----------------------------------------------------------------------
 
 export default function AccountPopover() {
-  const { disconnect } = useMetaMask();
+  const { connect, account, isConnected, disconnect } = useMetaMask();
   const user = useContextLoginUser();
   const navigate = useNavigate();
 
@@ -102,10 +102,12 @@ export default function AccountPopover() {
         </Stack> */}
 
         <Divider sx={{ borderStyle: 'dashed' }} />
-
-        <MenuItem onClick={() => handleClose(0)} sx={{ m: 1 }}>
+        {!isConnected &&<MenuItem onClick={connect} sx={{ m: 1 }}>
+          Connect to MetaMask
+        </MenuItem>}
+        {isConnected &&<MenuItem onClick={() => handleClose(0)} sx={{ m: 1 }}>
           Logout
-        </MenuItem>
+        </MenuItem>}
       </Popover>
     </>
   );
