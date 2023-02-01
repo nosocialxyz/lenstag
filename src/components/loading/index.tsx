@@ -10,7 +10,8 @@ interface Props {
 const BoxWrap = styled(`div`)(({ width = '100px' }: Props) => ({
     width: width,
     background: 'repeating-linear-gradient(135deg, transparent, transparent 3px, #fff 3px, #fff 8px)',
-    animation: 'shine 1s infinite linear',
+    // animation: 'shine 1s infinite linear',
+    animation: '3s shine linear infinite normal',
     overflow: 'hidden'
 }))
 

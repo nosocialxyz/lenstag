@@ -2,7 +2,7 @@ import { Button, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import Logo from '../../components/logo';
 import './style.css';
 import { useLocation } from 'react-router-dom';
-import { useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useContextLoginUser } from 'src/lib/hooks';
 import Header from 'src/components/header';
 import { Search } from '@mui/icons-material';
@@ -59,43 +59,56 @@ function Home() {
   const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
   const [handle, setHandle] = useState<string>('');
   const [triggerResult, setTriggerResult] = useState<TriggerResult | null>(null);
+  const [isNotStart, setIsNotStart] = useState<boolean>(false);
+  const [isInvalid, setIsInvalid] = useState<boolean>(false);
 
-  const search = async () => {
+  useEffect(() => {
+    if (triggerResult && triggerResult.statusCode !== 200) {
+      setIsInvalid(true)
+    } else {
+      setIsInvalid(false)
+    }
+    if (searchResult && searchResult.status === 'Finished' && searchResult.tags === undefined) {
+      setIsNotStart(true)
+    }
+  }, [searchResult, triggerResult])
+
+  const search = useCallback(async () => {
     console.log('handle:::', handle)
     setSearchResult(null)
     complete[0].classList.remove('block')
     setIsInSearching(true);
     describe[0].classList.add('none');
     homeContainer[0].classList.add('home-container-search');
-    loading[0].classList.add('block')
-    tip[0].classList.add('block')
-    processing[0].classList.add('block');
-    const triggerRes = await trigger(handle)
-    if (triggerRes && triggerRes.statusCode == 200) {
+    
+    const triggerRes = await trigger(handle);
+    setTriggerResult(triggerRes)
+    if (triggerRes && triggerRes.statusCode === 200) {
+      loading[0].classList.add('block')
+      tip[0].classList.add('block')
+      processing[0].classList.add('block');
       processing[0].classList.add('flashing')
-
       const timer = setInterval(() => {
         tags(handle).then(res => {
           loading[0].classList.remove('block');
           mission[0].classList.remove('rowup');
           console.log('tags res:::', res)
-          setSearchResult(res)
-          if (res && res.unprocessed === 0) {
+          if (res && res.status === 'Finished') {
             processing[0].classList.remove('block')
             complete[0].classList.add('block')
-            setTimeout(() => {
-              clearInterval(timer)
-              // setSearchResult(result)
-            }, 6000);
+            // setSearchResult(res)
+            clearInterval(timer)
           }
+          setSearchResult(res)
         })
-      }, 5000);
+      }, 5000)
     }
 
     setTimeout(() => {
       mission[0].classList.add('rowup');
     }, 3000);
-  }
+
+  }, [handle])
 
   return (
     <div className="home">
@@ -131,7 +144,7 @@ function Home() {
         <div className='search_result'>
           <div className='result_mission'>
             <div className='mission_loading'>Explore the user's social network on lens...</div>
-            <div className='mission_processing'>Use AI to analyze user's publications, {searchResult?.unprocessed ? searchResult?.unprocessed : '-'} left ...</div>
+            <div className='mission_processing'>Use AI to analyze user's publications, {searchResult?.unprocessed ? searchResult?.unprocessed : '0'} left ...</div>
             <div className='mission_complete'>Mission completed</div>
           </div>
           <div className='tool_tip'>
@@ -139,23 +152,41 @@ function Home() {
           </div>
         </div>
         <div className='result_container'>
-          {isInSearching && <div className='result_card'>
+          {
+            !isInvalid ? (isInSearching && <div className='result_card'>
             <div className='result_tags'>
-              { searchResult?.picture ? <div className='avatar'><img src={searchResult?.picture} /></div> : <Loading width='52px' height='52px' /> }
-              { searchResult?.handle ? <div className='profile'>{searchResult?.handle}</div> : <Loading width='160px' height='52px' />}
+              { searchResult?.picture ? <div className='avatar'><img src={searchResult?.picture} /></div> : <div className='avatar loading'></div> }
+              { searchResult?.handle ? <div className='profile'>{searchResult?.handle}</div> : <div className='profile loading'></div> }
               { searchResult?.tags?.length ? <div className='tags'>
                 {
                   searchResult?.tags?.length && searchResult?.tags?.slice(0, 4).map((e, index) => {
                     return <AutoDiv key={index} width={calWidth(e) + 'px'} fontSize={calFontSize(e, calWidth(e)) + 'px'}>{e}</AutoDiv>
                   })
                 }
-              </div> : <Loading width='420px' height='52px' />}
-              {searchResult ? <div className='follow'><AddIcon /> FOLLOW</div> : <Loading width='160px' height='52px' />}
+              </div> : <div className='tags loading'></div>}
+              { searchResult ? <div className='follow'><AddIcon /> FOLLOW</div> : <div className='follow loading'></div>}
             </div>
-            { searchResult?.aiPicture ? <img className='result_pic' src={searchResult?.aiPicture} /> : <div className='result_pic'>
-              <Loading width='800px' height='360px' />
+            { isNotStart ? <div>not start / data does not meet calculation requirements
+</div> : searchResult?.aiPicture ? <img className='result_pic' src={searchResult?.aiPicture} /> : <div className='result_pic loading'>
             </div>}
-          </div>}
+          </div>): <div>Invalid handle</div>
+          }
+          {/* {(isInSearching && !isInvalid) && <div className='result_card'>
+            <div className='result_tags'>
+              { searchResult?.picture ? <div className='avatar'><img src={searchResult?.picture} /></div> : <div className='avatar loading'></div> }
+              { searchResult?.handle ? <div className='profile'>{searchResult?.handle}</div> : <div className='profile loading'></div> }
+              { searchResult?.tags?.length ? <div className='tags'>
+                {
+                  searchResult?.tags?.length && searchResult?.tags?.slice(0, 4).map((e, index) => {
+                    return <AutoDiv key={index} width={calWidth(e) + 'px'} fontSize={calFontSize(e, calWidth(e)) + 'px'}>{e}</AutoDiv>
+                  })
+                }
+              </div> : <div className='tags loading'></div>}
+              { searchResult ? <div className='follow'><AddIcon /> FOLLOW</div> : <div className='follow loading'></div>}
+            </div>
+            { searchResult?.aiPicture ? <img className='result_pic' src={searchResult?.aiPicture} /> : <div className='result_pic loading'>
+            </div>}
+          </div>} */}
         </div>
       </div>
       <div className="home-copyright">© 2023 Build with 💛 by NoSocial Labs</div>

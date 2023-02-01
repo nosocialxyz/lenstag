@@ -150,8 +150,10 @@ export interface SearchResult {
     unprocessed: number;
     tags: string[];
     aiPicture: string;
+    status: string;
 }
 
 export interface TriggerResult {
-    status: string;
+    message: string;
+    statusCode: number;
 }

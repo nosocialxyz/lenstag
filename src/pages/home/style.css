@@ -226,8 +226,11 @@
     0% {
         opacity: 1;
     }
+    50% {
+        opacity: 0.5;
+    }
     100% {
-        opacity: 0.3;
+        opacity: 1;
     }
 }
 
@@ -265,7 +268,7 @@
 }
 
 .profile {
-    width: 160px;
+    min-width: 160px;
     height: 52px;
     display: flex;
     font-family: 'Roboto';
@@ -285,7 +288,7 @@
 }
 
 .tags {
-    width: 420px;
+    min-width: 420px;
     height: 52px;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
@@ -326,30 +329,46 @@
     opacity: 0.8;
 }
 
-
 .result_pic {
     display: flex;
-    width: 1200px;
+    min-width: 800px;
+    min-height: 200px;
     margin-top: 32px;
     align-items: center;
     justify-content: center;
 }
 
-.border {
-    /* background: linear-gradient(90deg, #333 50%, transparent 0) repeat-x; */
-    border: 1px dashed;
-    animation: linearGradientMove .3s infinite linear;
-    background:
-        linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
-        linear-gradient(90deg, #333 50%, transparent 0) repeat-x,
-        linear-gradient(0deg, #333 50%, transparent 0) repeat-y,
-        linear-gradient(0deg, #333 50%, transparent 0) repeat-y;
-    background-size: 4px 1px, 4px 1px, 1px 4px, 1px 4px;
-    background-position: 0 0, 0 100%, 0 0, 100% 0;
-}
-
 @keyframes linearGradientMove {
     100% {
         background-position: 4px 0, -4px 100%, 0 -4px, 100% 4px;
+    }
+}
+
+.loading {
+    /* background: repeating-linear-gradient(135deg, transparent, transparent 3px, #fff 3px, #fff 8px); */
+    animation: 3s shine linear infinite normal;
+    overflow: hidden;
+    background-color: #000;
+    /* border-radius: 100%; */
+}
+
+@keyframes shine {
+    /* 0% { background-position: -1px -1px;}
+    100% { background-position: -12px -12px;} */
+    0% {
+        opacity: 1;
+        /* background-position: -1px -1px; */
+        transform: scale(0.1);
+    }
+    
+    50% {
+        opacity: 0.5;
+        transform: scale(0.5);
+    }
+
+    100% {
+        opacity: 0;
+        transform: scale(1);
+        /* background-position: -12px -12px; */
     }
 }
