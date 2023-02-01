@@ -9,20 +9,30 @@ import { HelmetProvider } from 'react-helmet-async';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
+import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { LensProvider } from '@lens-protocol/react';
+import { lensConfig } from './lib/LensConfig';
+import { client } from './lib/wagmiClient';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
+console.log('lensConfig::', lensConfig)
+
 root.render(
   <HelmetProvider>
     <BrowserRouter>
       <React.StrictMode>
-        <Web3ReactProvider getLibrary={(provider) => { new Web3(provider) }}>
-          <MetaMaskProvider>
-            <App />
-          </MetaMaskProvider>
-        </Web3ReactProvider>
+        <WagmiConfig client={client}>
+          <LensProvider config={lensConfig}>
+            <Web3ReactProvider getLibrary={(provider) => { new Web3(provider) }}>
+              <MetaMaskProvider>
+                <App />
+              </MetaMaskProvider>
+            </Web3ReactProvider>
+          </LensProvider>
+        </WagmiConfig>
       </React.StrictMode>
     </BrowserRouter>
   </HelmetProvider>

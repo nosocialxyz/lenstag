@@ -2,7 +2,7 @@ import { Button, FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import Logo from '../../components/logo';
 import './style.css';
 import { useLocation } from 'react-router-dom';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { useContextLoginUser } from 'src/lib/hooks';
 import Header from 'src/components/header';
 import { Search } from '@mui/icons-material';
@@ -17,6 +17,9 @@ import { tags, trigger } from 'src/api';
 import Loading from 'src/components/loading';
 import { useInterval } from 'src/utils/useInterval';
 import { lintParam } from 'src/utils/lintParam';
+import { ProfileFragment, useFollow, useProfile  } from '@lens-protocol/react';
+import { FollowProfile } from 'src/components/follow';
+
 
 interface AutoDivPros {
   width?: string;
@@ -46,6 +49,10 @@ const calFontSize = (tag: string, width: number) => {
   return res;
 }
 
+type ProfileFollowProps = {
+  profile: ProfileFragment;
+};
+
 function Home() {
   const [open, setOpen] = useState(false);
   const [isInSearching, setIsInSearching] = useState(false);
@@ -58,10 +65,13 @@ function Home() {
   const complete = document.getElementsByClassName('mission_complete');
   const user = useContextLoginUser();
   const [searchResult, setSearchResult] = useState<SearchResult | null>(null);
+  const [triggerResult, setTriggerResult] = useState<TriggerResult | null>(null);
   const [handle, setHandle] = useState<string>('');
   const [query, setQuery] = useState<string>('');
   const [isNotRequirement, setIsNotRequirement] = useState<boolean>(false);
   const [isInvalid, setIsInvalid] = useState<boolean>(false);
+  // const { data: profile } = useProfile({ handle });
+  // const { follow } = useMemo();
 
   useEffect(() => {
     if (searchResult && searchResult.status === 'Finished' && searchResult.tags === undefined) {
@@ -87,7 +97,6 @@ function Home() {
   }, 5000)
 
   const search = useCallback(async () => {
-    console.log('handle:::', handle)
     setQuery(lintParam(handle));
     setSearchResult(null)
     setIsInSearching(true);
@@ -95,6 +104,7 @@ function Home() {
     describe[0].classList.add('none');
     homeContainer[0].classList.add('home_container_search');
     const triggerRes = await trigger(lintParam(handle));
+    setTriggerResult(triggerRes);
     if (triggerRes && triggerRes.statusCode !== 200) {
       setIsInvalid(true)
       setIsInSearching(false)
@@ -165,7 +175,7 @@ function Home() {
                     })
                   }
                 </div> : <div className='tags loading'></div>}
-                {searchResult ? <div className='follow'><AddIcon /> FOLLOW</div> : <div className='follow loading'></div>}
+                {(searchResult && triggerResult && triggerResult.statusCode === 200) ? <FollowProfile searchRes={searchResult} triggerResult={triggerResult} ></FollowProfile> : <div className='follow loading'></div>}
               </div>
               {isNotRequirement ? <div> data does not meet calculation requirements </div> 
               : searchResult?.aiPicture ? <img className='result_pic' src={searchResult?.aiPicture} /> : <div className='result_pic loading'>
