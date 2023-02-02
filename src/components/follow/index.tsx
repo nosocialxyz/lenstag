@@ -9,9 +9,7 @@ type ProfileFollowProps = {
 };
 
 export function FollowProfile({ searchRes }: ProfileFollowProps) {
-    console.log('searchRes:::', searchRes)
     const { data: profile } = useProfile({ handle: searchRes.handle });
-    console.log('profile:::', profile)
     if (profile) {
         return <Follow profile={profile} ></Follow>
     } else {

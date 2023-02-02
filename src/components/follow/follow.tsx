@@ -19,7 +19,6 @@ export function Follow ({ profile }: ProfileFollowProps) {
   });
 
   const onLoginClick = async () => {
-    console.log('isConnected:::', isConnected)
     if (isConnected) {
       await disconnectAsync();
     }
@@ -29,7 +28,6 @@ export function Follow ({ profile }: ProfileFollowProps) {
     if (connector instanceof InjectedConnector) {
       const signer = await connector.getSigner();
       await login(signer);
-      console.log('isLoginPending::::', isLoginPending)
       await follow()
     }
   };
