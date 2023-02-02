@@ -1,26 +1,20 @@
-import { Button, FormControl, InputLabel, OutlinedInput } from '@mui/material';
+import { FormControl, InputLabel, OutlinedInput } from '@mui/material';
 import Logo from '../../components/logo';
 import './style.css';
-import { useLocation } from 'react-router-dom';
 import { useCallback, useEffect, useMemo, useState } from 'react';
-import { useContextLoginUser } from 'src/lib/hooks';
 import Header from 'src/components/header';
-import { Search } from '@mui/icons-material';
 import SearchIcon from '@mui/icons-material/Search';
 import { Tooltip } from '@mui/material';
 import HelpOutlineIcon from '@mui/icons-material/HelpOutline';
 import AddIcon from '@mui/icons-material/Add';
 import styled from '@emotion/styled';
 import { SearchResult, TriggerResult } from 'src/lib/types';
-import result from 'src/_mock/search_result';
 import { tags, trigger } from 'src/api';
-import Loading from 'src/components/loading';
 import { useInterval } from 'src/utils/useInterval';
 import { lintParam } from 'src/utils/lintParam';
-import { ProfileFragment, useFollow, useProfile  } from '@lens-protocol/react';
+import { ProfileFragment  } from '@lens-protocol/react';
 import { FollowProfile } from 'src/components/follow';
 import ErrorBoundary from 'src/components/error';
-
 
 interface AutoDivPros {
   width?: string;

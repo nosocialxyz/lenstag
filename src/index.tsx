@@ -9,7 +9,7 @@ import { HelmetProvider } from 'react-helmet-async';
 import reportWebVitals from './reportWebVitals';
 import * as serviceWorker from './serviceWorker';
 import App from './App';
-import { configureChains, createClient, WagmiConfig } from 'wagmi';
+import { WagmiConfig } from 'wagmi';
 import { LensProvider } from '@lens-protocol/react';
 import { lensConfig } from './lib/LensConfig';
 import { client } from './lib/wagmiClient';
