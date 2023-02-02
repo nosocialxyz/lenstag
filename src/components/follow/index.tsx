@@ -1,23 +1,15 @@
-import { ProfileFragment, useFollow, useProfile } from '@lens-protocol/react';
+import { useProfile } from '@lens-protocol/react';
 
 import AddIcon from '@mui/icons-material/Add';
-import { SearchResult, TriggerResult } from 'src/lib/types';
+import { SearchResult } from 'src/lib/types';
 import { Follow } from './follow';
 
 type ProfileFollowProps = {
-    searchRes: SearchResult ;
-    triggerResult: TriggerResult;
+    searchRes: SearchResult;
 };
 
-export function FollowProfile({ searchRes, triggerResult }: ProfileFollowProps) {
-    //   const { follow, isPending } = useFollow({ profile });
-
-    //   if (profile.isFollowedByMe || profile.isOptimisticFollowedByMe) {
-    //     return <div className='follow' onClick={follow} ><AddIcon /> FOLLOW</div>;
-    //   }
-
-    console.log('searchRes.handle:', searchRes.handle)
-
+export function FollowProfile({ searchRes }: ProfileFollowProps) {
+    console.log('searchRes:::', searchRes)
     const { data: profile } = useProfile({ handle: searchRes.handle });
     console.log('profile:::', profile)
     if (profile) {
@@ -27,10 +19,4 @@ export function FollowProfile({ searchRes, triggerResult }: ProfileFollowProps) 
             <div className='follow'><AddIcon /> FOLLOW</div>
         );
     }
-    // if (triggerResult && triggerResult.statusCode === 200 && searchRes) {
-        
-    // }
-    // return (
-    //     <div className='follow'><AddIcon /> FOLLOW</div>
-    // );
 }

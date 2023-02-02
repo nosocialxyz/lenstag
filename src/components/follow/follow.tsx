@@ -8,7 +8,6 @@ type ProfileFollowProps = {
 };
 
 export function Follow ({ profile }: ProfileFollowProps) {
-    console.log('profile::::', profile)
   const { follow, isPending } = useFollow({ profile });
   const { login, error: loginError, isPending: isLoginPending } = useWalletLogin();
 
