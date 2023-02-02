@@ -10,7 +10,7 @@ export interface IResponse {
 
 let axiosInstance: AxiosInstance = axios.create({
     // baseURL: process.env.REACT_APP_BASE_URL,
-    baseURL: 'http://43.132.164.207:22223/api/v0',
+    baseURL: 'https://api.nosocial.xyz/api/v0',
     headers: {
         Accept: "application/json",
         "Content-Type": "application/x-www-form-urlencoded"
