@@ -41,6 +41,6 @@ export function Follow ({ profile }: ProfileFollowProps) {
     // <button onClick={follow} disabled={isPending}>
     //   {isPending ? 'Follow in progress...' : 'Follow'}
     // </button>
-    <div className='follow' onClick={onLoginClick}><AddIcon />{isPending ? 'Follow in progress...' : 'Follow'}</div>
+    <div className='follow' onClick={onLoginClick}><AddIcon />{isPending ? 'Following' : 'Follow'}</div>
   );
 }

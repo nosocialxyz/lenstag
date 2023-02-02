@@ -96,7 +96,7 @@ function Home() {
   useInterval(() => {
     tags(query).then(res => {
       loading[0].classList.remove('block');
-      mission[0].classList.remove('rowUp');
+      // mission[0].classList.remove('rowUp');
       if (res && res.status === 'Finished') {
         processing[0].classList.remove('block')
         complete[0].classList.add('block')
@@ -110,11 +110,15 @@ function Home() {
     setSearchResult(null)
     setIsInSearching(true);
     uiRowUp();
+    loading[0].classList.add('rowUp');
     const triggerRes = await trigger(lintParam(handle));
     setTriggerResult(triggerRes);
     if (triggerRes && triggerRes.statusCode !== 200) {
       setIsInvalid(true)
       setIsInSearching(false)
+      loading[0].classList.remove('block')
+      processing[0].classList.remove('block')
+      complete[0].classList.remove('block')
     } else {
       setIsInvalid(false)
     }
@@ -124,10 +128,6 @@ function Home() {
       processing[0].classList.add('block');
       processing[0].classList.add('flashing')
     }
-
-    setTimeout(() => {
-      mission[0].classList.add('rowUp');
-    }, 2000);
 
   }, [handle])
 
@@ -165,9 +165,9 @@ function Home() {
               <div className='mission_loading'>Explore the user's social network on lens...</div>
               <div className='mission_processing'>Use AI to analyze user's publications, {searchResult?.unprocessed ? searchResult?.unprocessed : '0'} left ...</div>
               <div className='mission_complete'>Mission completed</div>
-            </div>
-            <div className='tool_tip'>
-              <Tooltip className='tip' title="Lenstag is an internal version currently. In public version, the speed of AI analysis will be greatly accelerated"><HelpOutlineIcon /></Tooltip>
+              <div className='tool_tip'>
+                <Tooltip className='tip' title="Lenstag is an internal version currently. In public version, the speed of AI analysis will be greatly accelerated"><HelpOutlineIcon /></Tooltip>
+              </div>
             </div>
           </div>
           <div className='result_container'>
