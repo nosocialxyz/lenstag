@@ -1,0 +1,22 @@
+name: Main CI
+
+on:
+  pull_request:
+    branches: [ main ]
+
+env:
+  CI: false
+
+jobs:
+  build:
+    if: github.repository == 'nosocialxyz/lenstag'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Install and Build 🪓
+        run: |
+          yarn
+          yarn build
