@@ -8,6 +8,8 @@ body {
   /* background-image: url('./assets/images/background.jpeg'); */
   background-repeat:no-repeat; 
   background-attachment:fixed;
+  overflow-x:hidden;
+  overflow-y:hidden;
 }
 
 ::-webkit-scrollbar {
