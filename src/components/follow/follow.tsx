@@ -42,7 +42,6 @@ export function Follow({ profile }: ProfileFollowProps) {
             const signer = await connector.getSigner();
             await login(signer);
             follow().then().catch((error: any) => {
-                // console.log('hahaha', error?.message)
                 setErrorMsg(error?.message)
                 setOpen(true)
             });

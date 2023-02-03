@@ -137,7 +137,7 @@
 }
 
 .home_header_title {
-    width: 499px;
+    /* width: 499px; */
     height: 45px;
     font-family: 'Roboto';
     font-style: italic;
@@ -156,7 +156,7 @@
 
 .home_header_desc {
     width: 848px;
-    height: 68px;
+    /* height: 68px; */
     font-family: 'Roboto';
     font-style: italic;
     font-weight: 600;

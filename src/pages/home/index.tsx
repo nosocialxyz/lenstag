@@ -135,9 +135,9 @@ function Home() {
         <Header onOpenNav={() => setOpen(true)} />
         <div className="home_container">
           <div className='home_header'>
-            <div className='home_header_title'>Find people you like</div>
+            <div className='home_header_title'>Follow the people you're interested</div>
             <div className='home_header_desc'>
-              LensTag analyzes Lens user's social content with OpenAI, and generate 4 tag to describe the user. Users can quickly find people you're interested without checking out their publications.</div>
+              LensTag analyzes Lens user's social content with OpenAI, and generate 4 tags to describe the user. Users can quickly find people you're interested without checking out their publications.</div>
           </div>
           <div className='search'>
             <div className='search_container' >
