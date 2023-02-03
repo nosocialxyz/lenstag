@@ -2,7 +2,7 @@ import { useProfile } from '@lens-protocol/react';
 
 import { SearchResult } from 'src/lib/types';
 import { Follow } from './follow';
-import lensIcon from '../../assets/icon/lens.svg';
+import lensIcon from '../../assets/icon/LENS_LOGO_Only.svg';
 
 type ProfileFollowProps = {
     searchRes: SearchResult;

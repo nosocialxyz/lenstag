@@ -30,7 +30,7 @@ const AutoDiv = styled(`div`)(() => ({
   alignItems: 'center',
   textAlign:'justify',
   justifyContent: 'center',
-  border: '1px solid #FFC130',
+  border: '1px solid #fff',
   filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
   borderRadius: '8px',
   overflow: 'hidden'
