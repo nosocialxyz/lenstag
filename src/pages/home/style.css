@@ -295,9 +295,10 @@
     min-width: 420px;
     height: 52px;
     display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    grid-template-columns: 22% 22% 22% 22%;
     align-items: center;
     justify-content: flex-start;
+    gap: 4%;
 }
 
 /* .tags_item {
@@ -379,4 +380,37 @@
 
 a {
     text-decoration: none;
+}
+
+.widget-button {
+    background: #abfe2c;
+    padding: 7px 14px;
+    display: flex;
+    align-items: center;
+    color: #00501e;
+    border-radius: 7px;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.widget-button img {
+    width: 25px;
+    height: 25px;
+}
+  
+.widget-button:hover {
+    background: #aafe2ccb;
+}
+
+.widget-button-large {
+    font-size: 22px;
+}
+
+.widget-button-icon {
+    height: 40px;
+    width: 40px;
+    padding: 0px !important;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }

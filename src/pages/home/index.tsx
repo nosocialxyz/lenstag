@@ -16,21 +16,24 @@ import { ProfileFragment  } from '@lens-protocol/react';
 import { FollowProfile } from 'src/components/follow';
 import ErrorBoundary from 'src/components/error';
 
-interface AutoDivPros {
-  width?: string;
-  fontSize?: string;
-}
+// interface AutoDivPros {
+//   width?: string;
+//   fontSize?: string;
+// }
 
-const AutoDiv = styled(`div`)(({ width = '59px', fontSize = '12px' }: AutoDivPros) => ({
+const AutoDiv = styled(`div`)(() => ({
   height: '32px',
-  width: width,
+  // width: width,
+  // minWidth: '60px',
   display: 'flex',
-  fontSize: fontSize,
+  // fontSize: '12px',
   alignItems: 'center',
+  textAlign:'justify',
   justifyContent: 'center',
   border: '1px solid #FFC130',
   filter: 'drop-shadow(0px 4px 4px rgba(0, 0, 0, 0.25))',
   borderRadius: '8px',
+  overflow: 'hidden'
 }))
 
 // max width = 105 px
@@ -43,10 +46,6 @@ const calFontSize = (tag: string, width: number) => {
   const res = (width / tag.length) * 0.1
   return res;
 }
-
-type ProfileFollowProps = {
-  profile: ProfileFragment;
-};
 
 function Home() {
   const [open, setOpen] = useState(false);
@@ -88,15 +87,19 @@ function Home() {
   }, [handle])
 
   useInterval(() => {
-    tags(query).then(res => {
-      loading[0].classList.remove('block');
-      // mission[0].classList.remove('rowUp');
-      if (res && res.status === 'Finished') {
-        processing[0].classList.remove('block')
-        complete[0].classList.add('block')
-      }
-      setSearchResult(res)
-    })
+    if (!isInvalid && searchResult?.status !== 'Finished') {
+      tags(query).then(res => {
+        loading[0].classList.remove('block');
+        // mission[0].classList.remove('rowUp');
+        if (res && res.status === 'Finished') {
+          processing[0].classList.remove('block')
+          complete[0].classList.add('block')
+        }
+        setSearchResult(res)
+      })
+    } else {
+      
+    }
   }, 5000)
 
   const search = useCallback(async () => {
@@ -174,7 +177,7 @@ function Home() {
                     {isNotRequirement ? <div className='tags'></div> : searchResult?.tags?.length ? <div className='tags'>
                       {
                         searchResult?.tags?.length && searchResult?.tags?.slice(0, 4).map((e, index) => {
-                          return <AutoDiv key={index} width={calWidth(e) + 'px'} fontSize={calFontSize(e, calWidth(e)) + 'px'}>{e}</AutoDiv>
+                          return <AutoDiv key={index}>{e}</AutoDiv>
                         })
                       }
                     </div> : <div className='tags loading'></div>}

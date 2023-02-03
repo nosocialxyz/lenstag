@@ -2,6 +2,7 @@ import { ProfileFragment, useFollow, useWalletLogin } from '@lens-protocol/react
 import AddIcon from '@mui/icons-material/Add';
 import { useAccount, useConnect, useDisconnect } from 'wagmi';
 import { InjectedConnector } from 'wagmi/connectors/injected';
+import lensIcon from '../../assets/icon/lens.svg';
 
 type ProfileFollowProps = {
   profile: ProfileFragment;
@@ -34,13 +35,10 @@ export function Follow ({ profile }: ProfileFollowProps) {
 
 
   if (profile.isFollowedByMe || profile.isOptimisticFollowedByMe) {
-    return <div className='follow'>Following</div>;
+    return <span className='widget-button'><img src={lensIcon} /> Following </span>
   }
 
   return (
-    // <button onClick={follow} disabled={isPending}>
-    //   {isPending ? 'Follow in progress...' : 'Follow'}
-    // </button>
-    <div className='follow' onClick={onLoginClick}><AddIcon />{isPending ? 'Following' : 'Follow'}</div>
+    <span className='widget-button' onClick={onLoginClick} ><img src={lensIcon} /> {isPending ? 'Following' : 'Follow'} </span>
   );
 }
