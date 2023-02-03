@@ -376,3 +376,7 @@
         /* background-position: -12px -12px; */
     }
 }
+
+a {
+    text-decoration: none;
+}

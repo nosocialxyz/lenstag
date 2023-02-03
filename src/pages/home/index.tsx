@@ -170,7 +170,7 @@ function Home() {
                 !isInvalid ? (isInSearching && <div className='result_card'>
                   <div className='result_tags'>
                     {searchResult?.picture ? <div className='avatar'><img src={searchResult?.picture} /></div> : <div className='avatar loading'></div>}
-                    {searchResult?.handle ? <div className='profile'>{searchResult?.handle}</div> : <div className='profile loading'></div>}
+                    {searchResult?.handle ? <a className='profile' href={'https://lenster.xyz/u/' + query } target='_blank' >{searchResult?.handle}</a> : <div className='profile loading'></div>}
                     {isNotRequirement ? <div className='tags'></div> : searchResult?.tags?.length ? <div className='tags'>
                       {
                         searchResult?.tags?.length && searchResult?.tags?.slice(0, 4).map((e, index) => {
