@@ -1,8 +1,8 @@
 import { useProfile } from '@lens-protocol/react';
 
-import AddIcon from '@mui/icons-material/Add';
 import { SearchResult } from 'src/lib/types';
 import { Follow } from './follow';
+import lensIcon from '../../assets/icon/LENS_LOGO_Only.svg';
 
 type ProfileFollowProps = {
     searchRes: SearchResult;
@@ -14,7 +14,7 @@ export function FollowProfile({ searchRes }: ProfileFollowProps) {
         return <Follow profile={profile} ></Follow>
     } else {
         return (
-            <div className='follow'><AddIcon /> FOLLOW</div>
+            <span className='widget-button'><img src={lensIcon} />Follow</span>
         );
     }
 }

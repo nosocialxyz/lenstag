@@ -6,6 +6,7 @@ import { Box, Divider, Typography, Stack, MenuItem, Avatar, IconButton, Popover 
 import { useContextLoginUser } from 'src/lib/hooks';
 import { useNavigate } from 'react-router-dom';
 import useMetaMask from 'src/components/wallets/metamask';
+import LensIcon from '../../assets/icon/LENS_LOGO_Only.svg';
 
 // ----------------------------------------------------------------------
 
@@ -46,6 +47,10 @@ export default function AccountPopover() {
         onClick={handleOpen}
         sx={{
           p: 0,
+          bgcolor: '#abfe2c',
+          '&:hover': {
+            bgcolor: '#aafe2ccb'
+          },
           // @ts-ignore
           ...(open && {
             '&:before': {
@@ -55,12 +60,13 @@ export default function AccountPopover() {
               height: '100%',
               borderRadius: '50%',
               position: 'absolute',
-              bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
+              // bgcolor: (theme) => alpha(theme.palette.grey[900], 0.8),
+              // bgcolor: alpha('#aafe2ccb', 0.8) ,
             },
           }),
         }}
       >
-        <Avatar src={'/assets/images/avatar.png'} alt="photoURL" />
+        <Avatar src={LensIcon} alt="photoURL" />
       </IconButton>
 
       <Popover
@@ -83,23 +89,17 @@ export default function AccountPopover() {
         }}
       >
         <Box sx={{ my: 1.5, px: 2.5 }}>
-          <Typography variant="subtitle2" noWrap>
+          {/* <Typography variant="subtitle2" noWrap>
             {user.basicInfo?.info?.name}
-          </Typography>
+          </Typography> */}
           <Typography variant="body2" sx={{ color: 'text.secondary' }} noWrap>
-            {user.basicInfo?.info?.handle}
+            {'Lens Protocol 🌿'}
           </Typography>
         </Box>
 
         <Divider sx={{ borderStyle: 'dashed' }} />
 
-        {/* <Stack sx={{ p: 1 }}>
-          {MENU_OPTIONS.map((option) => (
-            <MenuItem key={option.label} onClick={() => handleClose(option.key)}>
-              {option.label}
-            </MenuItem>
-          ))}
-        </Stack> */}
+        
 
         <Divider sx={{ borderStyle: 'dashed' }} />
         {!isConnected &&<MenuItem onClick={connect} sx={{ m: 1 }}>
@@ -108,6 +108,11 @@ export default function AccountPopover() {
         {isConnected &&<MenuItem onClick={() => handleClose(0)} sx={{ m: 1 }}>
           Logout
         </MenuItem>}
+        <Stack sx={{ p: 1 }}>
+          <MenuItem>
+            Setting
+          </MenuItem>
+        </Stack>
       </Popover>
     </>
   );

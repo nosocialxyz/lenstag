@@ -18,8 +18,6 @@ const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 
-console.log('lensConfig::', lensConfig)
-
 root.render(
   <HelmetProvider>
     <BrowserRouter>
