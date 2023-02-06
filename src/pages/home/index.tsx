@@ -112,7 +112,7 @@ function Home() {
   const missionProcessing = useMemo(() => {    
     if (searchResult) {
       if (searchResult.status === ProcessingStatus.Waiting || searchResult.status === ProcessingStatus.Collecting) {
-        return <div className='mission_processing flashing'>Collecting ...</div>
+        return <div className='mission_processing flashing'>Collect publications ...</div>
       } else if (searchResult.status === ProcessingStatus.Processing) {
         if (searchResult.unprocessed === 0) {
           return <div className='mission_processing flashing'>Generating new LensTag picture ...</div>
@@ -122,7 +122,7 @@ function Home() {
       } else if (searchResult.status === ProcessingStatus.Generating || searchResult.status === ProcessingStatus.AITagNotStarted) {
         return <div className='mission_processing flashing'>Generating new LensTag picture ...</div>
       } else if (searchResult.status === ProcessingStatus.Finished) {
-        return <div className='mission_processing'>Mission completed</div>
+        return <div className='mission_processing'>AI analysis complete</div>
       } else {
         return <></>
       }
@@ -142,9 +142,9 @@ function Home() {
         <Header onOpenNav={() => setOpen(true)} />
         <div className="home_container">
           <div className='home_header'>
-            <div className='home_header_title'>Find the people you're interested</div>
+            <div className='home_header_title'>Find your friends!</div>
             <div className='home_header_desc'>
-              LensTag analyzes Lens user's social content with OpenAI, and generate 4 tags to describe the user. Users can quickly find people you're interested without checking out their publications.</div>
+            LensTag analyzes a Lens user's social content with OpenAI, and generates 4 tags to describe the user. Users can quickly find people they're interested in without checking out every publication a user has created.</div>
           </div>
           <div className='search'>
             <div className='search_container' >
@@ -178,7 +178,7 @@ function Home() {
               {missionProcessing}
               {/* <div className='mission_complete'>Mission completed</div> */}
               <div className='tool_tip'>
-                <Tooltip className='tip' title="Lenstag is an internal version currently. In public version, the speed of AI analysis will be greatly accelerated"><HelpOutlineIcon /></Tooltip>
+                <Tooltip className='tip' title="Lenstag is in the internal version currently. In the public version, the speed of AI analysis will accelerate greatly"><HelpOutlineIcon /></Tooltip>
               </div>
             </div>
           </div>
