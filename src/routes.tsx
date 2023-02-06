@@ -24,12 +24,8 @@ export default function Router() {
     const routes = useRoutes([
         {
             path: '/',
-            element: <Navigate to="/home" replace/>
-        },
-        {
-            path: '/home',
-            element: <HomePage />,
-        },
+            element: <HomePage />
+        }
     ]);
 
     return routes;
