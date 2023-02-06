@@ -157,6 +157,10 @@ function Home() {
                   onChange={(event) => {
                     setHandle(event.target.value)
                   }}
+                  onKeyUp={(event) => {
+                    if (event.key== 'Enter')
+                      search();
+                  }}
                   placeholder={'for example littlethings or littlethings.lens'}
                 />
                 <SearchIcon className='search_button' sx={{
